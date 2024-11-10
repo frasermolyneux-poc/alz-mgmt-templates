@@ -11,6 +11,9 @@ on:
         description: 'Root Module Folder Relative Path'
         default: '.'
         type: string
+    secrets:
+      tf_github_token:
+        required: false
 
 jobs:
   plan:
@@ -28,6 +31,7 @@ jobs:
       ARM_TENANT_ID: "${{ vars.AZURE_TENANT_ID }}"
       ARM_USE_AZUREAD: true
       ARM_USE_OIDC: true
+      GITHUB_TOKEN: ${{ secrets.tf_github_token }}
 
     steps:
       - name: Checkout Code
@@ -101,6 +105,7 @@ jobs:
       ARM_TENANT_ID: "${{ vars.AZURE_TENANT_ID }}"
       ARM_USE_AZUREAD: true
       ARM_USE_OIDC: true
+      GITHUB_TOKEN: ${{ secrets.tf_github_token }}
 
     steps:
       - name: Download a Build Artifact
@@ -131,3 +136,5 @@ jobs:
           -input=false \
           -auto-approve \
           tfplan
+        env:
+          GITHUB_TOKEN: ${{ secrets.tf_github_token }}
